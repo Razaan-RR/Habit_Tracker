@@ -22,10 +22,12 @@ let router = createBrowserRouter([
       {
         path: '/public-habits',
         element: <PublicHabits></PublicHabits>,
+        loader: () => fetch('http://localhost:3000/habits'),
       },
       {
         path: '/my-habits',
         element: <MyHabits></MyHabits>,
+        loader: () => fetch('http://localhost:3000/habits'),
       },
       {
         path: '/add-habit',

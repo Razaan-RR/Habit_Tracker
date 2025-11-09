@@ -1,6 +1,6 @@
 function AddHabit() {
   return (
-    <section className="min-h-screen bg-indigo-50 flex items-center justify-center py-16 px-5">
+    <section className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 flex items-center justify-center py-16 px-5">
       <div className="max-w-4xl w-full bg-white rounded-2xl shadow-xl p-10 space-y-8">
         <h1 className="text-4xl font-bold text-center text-indigo-600">Add a New Habit</h1>
 
