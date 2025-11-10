@@ -56,9 +56,9 @@ function HabitItem({ habit }) {
               {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
             </td>
             <td className="flex gap-2 justify-center py-3">
-              <button className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white">
+              <Link to={`/update-habit/${_id}`}className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white">
                 Update
-              </button>
+              </Link>
               <button className="btn btn-sm bg-red-500 hover:bg-red-600 border-none text-white">
                 Delete
               </button>

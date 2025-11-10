@@ -2,7 +2,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 function HabitDetails() {
-  const habit = useLoaderData() 
+  const habit = useLoaderData()
   const navigate = useNavigate()
 
   if (!habit) return <div className="text-center p-10">No Habit Selected</div>
@@ -89,53 +89,59 @@ function HabitDetails() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-xl space-y-6">
-      <img
-        src={imageUrl}
-        alt={title}
-        className="w-full h-64 object-cover rounded-xl"
-      />
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
-        <p className="text-gray-600">{description}</p>
-        <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
-          {category}
-        </span>
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-gray-700 font-semibold">Progress (Last 30 days)</h3>
-        <div className="w-full bg-gray-200 h-4 rounded-full">
-          <div
-            className="bg-emerald-500 h-4 rounded-full transition-all duration-500"
-            style={{ width: `${progress}%` }}
-          />
+    <div className="bg-linear-to-br from-indigo-50 to-indigo-25">
+      <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-xl space-y-6">
+        <img
+          src={imageUrl}
+          alt={title}
+          className="w-full h-64 object-cover rounded-xl"
+        />
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
+          <p className="text-gray-600">{description}</p>
+          <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
+            {category}
+          </span>
         </div>
-        <p className="text-gray-600 text-sm">{progress}% completed</p>
-      </div>
 
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-gray-700 font-semibold">
-            Current Streak: <span className="text-orange-500">{currentStreak} 🔥</span>
-          </p>
-          <p className="text-gray-500 text-sm">
-            Created by: {ownerName} ({ownerEmail})
-          </p>
-          <p className="text-gray-500 text-sm">
-            Created on: {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
-          </p>
+        <div className="space-y-2">
+          <h3 className="text-gray-700 font-semibold">
+            Progress (Last 30 days)
+          </h3>
+          <div className="w-full bg-gray-200 h-4 rounded-full">
+            <div
+              className="bg-emerald-500 h-4 rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="text-gray-600 text-sm">{progress}% completed</p>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={handleDelete}
-            className="btn bg-red-500 hover:bg-red-600 border-none text-white px-4 py-2 rounded-lg"
-          >
-            Delete
-          </button>
-          <button className="btn bg-emerald-500 hover:bg-emerald-600 border-none text-white px-4 py-2 rounded-lg">
-            Mark Complete
-          </button>
+
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-gray-700 font-semibold">
+              Current Streak:{' '}
+              <span className="text-orange-500">{currentStreak} 🔥</span>
+            </p>
+            <p className="text-gray-500 text-sm">
+              Created by: {ownerName} ({ownerEmail})
+            </p>
+            <p className="text-gray-500 text-sm">
+              Created on:{' '}
+              {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={handleDelete}
+              className="btn bg-red-500 hover:bg-red-600 border-none text-white px-4 py-2 rounded-lg"
+            >
+              Delete
+            </button>
+            <button className="btn bg-emerald-500 hover:bg-emerald-600 border-none text-white px-4 py-2 rounded-lg">
+              Mark Complete
+            </button>
+          </div>
         </div>
       </div>
     </div>
