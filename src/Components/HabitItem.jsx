@@ -6,7 +6,7 @@ function HabitItem({ habit }) {
 
     const sortedDates = history
       .map((entry) => new Date(entry.createdAt))
-      .sort((a, b) => b - a) 
+      .sort((a, b) => b - a)
 
     let streak = 1
     let lastDate = new Date(sortedDates[0])
@@ -51,7 +51,7 @@ function HabitItem({ habit }) {
               {currentStreak} 🔥
             </td>
             <td className="text-gray-500">
-              {new Date(createdAt).toLocaleDateString()}
+              {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
             </td>
             <td className="flex gap-2 justify-center py-3">
               <button className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white">
