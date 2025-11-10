@@ -1,5 +1,7 @@
+import { Link } from "react-router"
+
 function HabitItem({ habit }) {
-  const { title, category, completionHistory = [], createdAt } = habit
+  const { title, category, completionHistory = [], createdAt, _id } = habit
 
   const calculateStreak = (history) => {
     if (!history.length) return 0
@@ -63,6 +65,9 @@ function HabitItem({ habit }) {
               <button className="btn btn-sm bg-emerald-500 hover:bg-emerald-600 border-none text-white">
                 Mark Complete
               </button>
+              {/* <Link to={`/habit-details/${_id}`} className="btn btn-sm bg-emerald-500 hover:bg-emerald-600 border-none text-white">
+                See Details
+              </Link> */}
             </td>
           </tr>
         </tbody>

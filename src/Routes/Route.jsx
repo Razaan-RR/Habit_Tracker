@@ -9,6 +9,7 @@ import ErrorPage from '../Pages/ErrorPage'
 import Register from '../Pages/Register'
 import Login from '../Pages/Login'
 import ProtectedRoute from '../Components/ProtectedRoute'
+import HabitDetails from '../Pages/HabitDetails'
 
 let router = createBrowserRouter([
   {
@@ -41,6 +42,12 @@ let router = createBrowserRouter([
             <AddHabit></AddHabit>
           </ProtectedRoute>
         ),
+      },
+      {
+        path: '/habit-details/:id',
+        element: <HabitDetails />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/habits/${params.id}`),
       },
     ],
   },

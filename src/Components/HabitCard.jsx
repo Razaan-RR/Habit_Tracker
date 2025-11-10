@@ -1,5 +1,7 @@
+import { Link } from "react-router"
+
 function HabitCard({ habit }) {
-  const { title, category, ownerName, completionHistory = [], imageUrl } = habit
+  const { title, category, ownerName, completionHistory = [], imageUrl, _id } = habit
 
   const calculateStreak = (history) => {
     if (!history.length) return 0
@@ -55,9 +57,9 @@ function HabitCard({ habit }) {
           </p>
         </div>
         <div className="card-actions mt-4 w-full">
-          <button className="btn btn-primary w-full rounded-full">
+          <Link to={`/habit-details/${_id}`} className="btn btn-primary w-full rounded-full">
             See Details →
-          </button>
+          </Link>
         </div>
       </div>
     </div>
