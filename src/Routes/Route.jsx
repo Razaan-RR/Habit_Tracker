@@ -8,6 +8,7 @@ import AuthLayout from '../Layouts/AuthLayout'
 import ErrorPage from '../Pages/ErrorPage'
 import Register from '../Pages/Register'
 import Login from '../Pages/Login'
+import ProtectedRoute from '../Components/ProtectedRoute'
 
 let router = createBrowserRouter([
   {
@@ -26,12 +27,20 @@ let router = createBrowserRouter([
       },
       {
         path: '/my-habits',
-        element: <MyHabits></MyHabits>,
+        element: (
+          <ProtectedRoute>
+            <MyHabits></MyHabits>
+          </ProtectedRoute>
+        ),
         loader: () => fetch('http://localhost:3000/habits'),
       },
       {
         path: '/add-habit',
-        element: <AddHabit></AddHabit>,
+        element: (
+          <ProtectedRoute>
+            <AddHabit></AddHabit>
+          </ProtectedRoute>
+        ),
       },
     ],
   },
