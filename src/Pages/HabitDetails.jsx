@@ -135,12 +135,6 @@ function HabitDetails() {
           </div>
 
           <div className="flex gap-4">
-            <button
-              onClick={handleDelete}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all"
-            >
-              Delete
-            </button>
             <button className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all">
               Mark Complete
             </button>

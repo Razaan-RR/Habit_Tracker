@@ -13,21 +13,14 @@ function MyHabits() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUserEmail(currentUser.email)
-      } else {
-        setUserEmail(null)
-      }
+      setUserEmail(currentUser?.email || null)  
     })
     return () => unsubscribe()
   }, [])
 
   useEffect(() => {
     if (userEmail && data?.length) {
-      const myHabits = data.filter(
-        (habit) => habit.ownerEmail === userEmail
-      )
-      setFilteredHabits(myHabits)
+      setFilteredHabits(data.filter((habit) => habit.ownerEmail === userEmail))
     } else {
       setFilteredHabits([])
     }
@@ -44,7 +37,7 @@ function MyHabits() {
           filteredHabits.length > 0 ? (
             filteredHabits.map((habit) => (
               <div key={habit._id} className="mb-6">
-                <HabitItem habit={habit}></HabitItem>
+                <HabitItem habit={habit} />
               </div>
             ))
           ) : (

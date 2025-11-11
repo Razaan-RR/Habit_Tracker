@@ -4,39 +4,28 @@ import Swal from 'sweetalert2'
 
 function HabitItem({ habit }) {
   const { title, category, completionHistory = [], createdAt, _id } = habit
-
   const navigate = useNavigate()
   const [habitData, setHabitData] = useState(habit)
 
   const calculateStreak = (history) => {
     if (!history.length) return 0
-
     const sortedDates = history
       .map((entry) => new Date(entry.createdAt))
       .sort((a, b) => b - a)
-
     let streak = 1
     let lastDate = new Date(sortedDates[0])
     lastDate.setHours(0, 0, 0, 0)
-
     for (let i = 1; i < sortedDates.length; i++) {
       const currentDate = new Date(sortedDates[i])
       currentDate.setHours(0, 0, 0, 0)
-
       const diff = (lastDate - currentDate) / (1000 * 60 * 60 * 24)
-
-      if (diff === 1) {
-        streak++
-        lastDate = currentDate
-      } else {
-        break
-      }
+      if (diff === 1) streak++, (lastDate = currentDate)
+      else break
     }
-
     return streak
   }
 
-  const currentStreak = calculateStreak(completionHistory)
+  const currentStreak = calculateStreak(habitData.completionHistory)
 
   const handleDelete = () => {
     Swal.fire({
@@ -49,82 +38,48 @@ function HabitItem({ habit }) {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/habits/${_id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data)
+        fetch(`http://localhost:3000/habits/${_id}`, { method: 'DELETE' })
+          .then(() => {
             navigate('/my-habits')
-            Swal.fire({
-              title: 'Deleted!',
-              text: 'Your file has been deleted.',
-              icon: 'success',
-            })
+            Swal.fire('Deleted!', 'Habit deleted.', 'success')
           })
-          .catch((err) => {
-            console.log(err)
-          })
+          .catch((err) => console.log(err))
       }
     })
   }
 
-  // ✅ Handle Mark Complete
   const handleMarkComplete = async () => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
-
-    // Prevent same-day duplicates
-    const alreadyCompleted = completionHistory.some((entry) => {
+    const alreadyCompleted = habitData.completionHistory.some((entry) => {
       const entryDate = new Date(entry.createdAt)
       entryDate.setHours(0, 0, 0, 0)
       return entryDate.getTime() === today.getTime()
     })
+    if (alreadyCompleted) return Swal.fire('Already done!', '', 'info')
 
-    if (alreadyCompleted) {
-      Swal.fire(
-        'Already done!',
-        'You have already completed this habit today.',
-        'info'
-      )
-      return
-    }
-
-    // Update locally first (instant feedback)
     const updatedHistory = [
-      ...completionHistory,
+      ...habitData.completionHistory,
       { createdAt: new Date().toISOString() },
     ]
     setHabitData({ ...habitData, completionHistory: updatedHistory })
 
     try {
-      const res = await fetch(`http://localhost:3000/habits/${_id}`, {
+      await fetch(`http://localhost:3000/habits/${_id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completionHistory: updatedHistory }),
       })
-
-      const data = await res.json()
-
-      if (data.success) {
-        Swal.fire('Good job!', 'Habit marked as complete!', 'success')
-      } else {
-        Swal.fire('Error', 'Failed to update habit.', 'error')
-      }
-    } catch (error) {
-      console.error(error)
+      Swal.fire('Good job!', 'Habit marked as complete!', 'success')
+    } catch {
       Swal.fire('Error', 'Something went wrong!', 'error')
     }
   }
 
-  // 🔄 Check if today already marked
   const isCompletedToday = (() => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)
-    return completionHistory.some((entry) => {
+    return habitData.completionHistory.some((entry) => {
       const entryDate = new Date(entry.createdAt)
       entryDate.setHours(0, 0, 0, 0)
       return entryDate.getTime() === today.getTime()
@@ -132,28 +87,28 @@ function HabitItem({ habit }) {
   })()
 
   return (
-    <div className="overflow-x-auto rounded-2xl shadow-xl bg-white mb-6">
-      <table className="table w-full">
+    <div className="rounded-2xl shadow-xl bg-white mb-6">
+      <table className="table-auto w-full border-collapse">
         <thead>
           <tr className="bg-indigo-100 text-indigo-800 text-base font-semibold">
-            <th className="py-4">Title</th>
-            <th>Category</th>
-            <th>Current Streak</th>
-            <th>Created Date</th>
-            <th className="text-center">Actions</th>
+            <th className="w-1/6 py-2 pl-4 text-left wrap-break-word">Title</th>
+            <th className="w-1/6 text-left wrap-break-word">Category</th>
+            <th className="w-1/6 text-center">Current Streak</th>
+            <th className="w-1/6 text-center">Created Date</th>
+            <th className="w-1/6 text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr className="hover:bg-indigo-50 transition-all duration-200">
-            <td className="font-medium text-gray-800">{title}</td>
-            <td className="text-gray-600">{category}</td>
-            <td className="text-orange-500 font-semibold">
+            <td className="font-medium text-gray-800 wrap-break-word pl-4">{title}</td>
+            <td className="text-gray-600 wrap-break-word">{category}</td>
+            <td className="text-orange-500 font-semibold text-center">
               {currentStreak} 🔥
             </td>
-            <td className="text-gray-500">
+            <td className="text-gray-500 text-center">
               {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
             </td>
-            <td className="flex gap-2 justify-center py-3">
+            <td className="text-center py-3 flex justify-center gap-2 pr-4">
               <Link
                 to={`/update-habit/${_id}`}
                 className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white"

@@ -34,33 +34,31 @@ function HabitCard({ habit }) {
   const currentStreak = calculateStreak(completionHistory)
 
   return (
-    <div className="card bg-linear-to-br from-blue-100 to-blue-50 shadow-lg hover:shadow-2xl transition-all duration-300 border border-indigo-100 rounded-2xl">
-      <figure className="px-5 pt-5">
+    <div className="bg-linear-to-r from-indigo-50 to-purple-50 border border-gray-200 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      <div className="relative h-48 w-full">
         <img
-          src={imageUrl}
+          src={imageUrl || 'https://i.ibb.co/1J20DV2P/user.png'}
           alt={title}
-          className="rounded-xl h-48 w-full object-cover"
+          className="object-cover w-full h-full"
         />
-      </figure>
-      <div className="card-body items-start text-left">
-        <h2 className="card-title text-lg font-semibold text-gray-800">
-          {title}
-        </h2>
-        <p className="text-sm text-gray-500">{category}</p>
-        <p className="text-sm text-gray-600">{ownerName}</p>
-        <div className="mt-3">
-          <p className="text-gray-700 text-sm">
-            Current Streak:{' '}
-            <span className="font-medium text-orange-500">
-              {currentStreak}🔥
-            </span>
+        <span className="absolute top-3 right-3 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+          {category}
+        </span>
+      </div>
+      <div className="p-5 space-y-3">
+        <h2 className="text-lg font-bold text-gray-800">{title}</h2>
+        <p className="text-gray-600 text-sm">By: <span className="font-medium">{ownerName}</span></p>
+        <div className="bg-gray-100 rounded-lg p-2 mt-2">
+          <p className="text-orange-500 font-semibold text-sm">
+            🔥 Current Streak: {currentStreak}
           </p>
         </div>
-        <div className="card-actions mt-4 w-full">
-          <Link to={`/habit-details/${_id}`} className="btn btn-primary w-full rounded-full">
-            See Details →
-          </Link>
-        </div>
+        <Link
+          to={`/habit-details/${_id}`}
+          className="block text-center mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-full transition"
+        >
+          See Details →
+        </Link>
       </div>
     </div>
   )
