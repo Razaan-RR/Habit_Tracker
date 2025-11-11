@@ -14,8 +14,8 @@ function Home() {
         transition={{ duration: 0.8, delay: 0.3 }}
       >
         <Banner></Banner>
-        <WhyBuildHabits></WhyBuildHabits>
         <FeaturedHabits></FeaturedHabits>
+        <WhyBuildHabits></WhyBuildHabits>
         <TopUsers></TopUsers>
       </motion.div>
     </div>

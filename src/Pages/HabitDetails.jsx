@@ -89,56 +89,59 @@ function HabitDetails() {
   }
 
   return (
-    <div className="bg-linear-to-br from-indigo-50 to-indigo-25">
-      <div className="max-w-3xl mx-auto p-6 bg-white rounded-2xl shadow-xl space-y-6">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-64 object-cover rounded-xl"
-        />
-        <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
-          <p className="text-gray-600">{description}</p>
-          <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
-            {category}
-          </span>
+    <div className="min-h-screen py-12 bg-linear-to-br from-indigo-50 to-purple-50">
+      <div className="max-w-4xl mx-auto flex flex-col lg:flex-row gap-10">
+        <div className="lg:w-1/2 rounded-3xl overflow-hidden shadow-2xl border border-indigo-100 transform hover:scale-105 transition-all duration-500">
+          <img
+            src={imageUrl || 'https://i.ibb.co/1J20DV2P/user.png'}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        <div className="space-y-2">
-          <h3 className="text-gray-700 font-semibold">
-            Progress (Last 30 days)
-          </h3>
-          <div className="w-full bg-gray-200 h-4 rounded-full">
-            <div
-              className="bg-emerald-500 h-4 rounded-full transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <p className="text-gray-600 text-sm">{progress}% completed</p>
-        </div>
+        <div className="lg:w-1/2 flex flex-col justify-between space-y-6">
+          <div className="bg-white p-6 rounded-2xl shadow-lg border border-indigo-100 space-y-4">
+            <h1 className="text-3xl font-bold text-indigo-700">{title}</h1>
+            <p className="text-gray-700">{description}</p>
+            
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
+                {category}
+              </span>
+              <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold">
+                Owner: {ownerName} ({ownerEmail})
+              </span>
+              <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold">
+                Created: {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
+              </span>
+            </div>
 
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-gray-700 font-semibold">
-              Current Streak:{' '}
-              <span className="text-orange-500">{currentStreak} 🔥</span>
-            </p>
-            <p className="text-gray-500 text-sm">
-              Created by: {ownerName} ({ownerEmail})
-            </p>
-            <p className="text-gray-500 text-sm">
-              Created on:{' '}
-              {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
-            </p>
+            <div>
+              <h3 className="text-gray-700 font-semibold mb-1">Progress (Last 30 days)</h3>
+              <div className="w-full bg-gray-200 h-4 rounded-full">
+                <div
+                  className="h-4 rounded-full bg-linear-to-r from-emerald-400 to-emerald-600 transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <p className="text-sm text-gray-500 mt-1">{progress}% completed</p>
+            </div>
+
+            <div>
+              <p className="text-gray-700 font-semibold">
+                Current Streak: <span className="text-orange-500">{currentStreak} 🔥</span>
+              </p>
+            </div>
           </div>
-          <div className="flex gap-2">
+
+          <div className="flex gap-4">
             <button
               onClick={handleDelete}
-              className="btn bg-red-500 hover:bg-red-600 border-none text-white px-4 py-2 rounded-lg"
+              className="flex-1 bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all"
             >
               Delete
             </button>
-            <button className="btn bg-emerald-500 hover:bg-emerald-600 border-none text-white px-4 py-2 rounded-lg">
+            <button className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all">
               Mark Complete
             </button>
           </div>
