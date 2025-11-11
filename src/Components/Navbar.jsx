@@ -73,7 +73,6 @@ function Navbar() {
                     alt={user.displayName || 'User'}
                     className="w-8 h-8 rounded-full object-cover border border-gray-300"
                   />
-                  <span>{user.displayName || 'User'}</span>
                 </button>
 
                 {dropdownOpen && (
@@ -159,21 +158,34 @@ function Navbar() {
 
           {user ? (
             <>
-              <li className="flex items-center gap-2 px-3 py-2">
-                <img
-                  src={user.photoURL || 'https://i.ibb.co/1J20DV2P/user.png'}
-                  alt={user.displayName || 'User'}
-                  className="w-8 h-8 rounded-full object-cover border border-gray-300"
-                />
-                <span>{user.displayName || 'User'}</span>
-              </li>
-              <li>
+              <li className="relative flex items-center gap-2 px-3 py-2">
                 <button
-                  onClick={handleLogOut}
-                  className="w-full px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2 focus:outline-none"
                 >
-                  Logout
+                  <img
+                    src={user.photoURL || 'https://i.ibb.co/1J20DV2P/user.png'}
+                    alt={user.displayName || 'User'}
+                    className="w-8 h-8 rounded-full object-cover border border-gray-300"
+                  />
                 </button>
+
+                {dropdownOpen && (
+                  <div className="absolute top-12 left-0 bg-white shadow-lg border rounded-md w-48 py-2 text-sm z-50">
+                    <div className="px-4 py-2 border-b">
+                      <p className="font-semibold">
+                        {user.displayName || 'User'}
+                      </p>
+                      <p className="text-gray-500 text-xs">{user.email}</p>
+                    </div>
+                    <button
+                      onClick={handleLogOut}
+                      className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
+                    >
+                      Log out
+                    </button>
+                  </div>
+                )}
               </li>
             </>
           ) : (
