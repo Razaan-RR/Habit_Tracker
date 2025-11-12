@@ -1,5 +1,6 @@
 import Banner from '../Components/Banner'
 import FeaturedHabits from '../Components/FeaturedHabits'
+import FeedbackSection from '../Components/FeedbackSection'
 import TopUsers from '../Components/TopUsers'
 import WhyBuildHabits from '../Components/WhyBuildHabits'
 import { motion } from 'framer-motion'
@@ -17,6 +18,7 @@ function Home() {
         <FeaturedHabits></FeaturedHabits>
         <WhyBuildHabits></WhyBuildHabits>
         <TopUsers></TopUsers>
+        <FeedbackSection></FeedbackSection>
       </motion.div>
     </div>
   )
