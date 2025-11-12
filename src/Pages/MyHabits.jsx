@@ -3,6 +3,7 @@ import HabitItem from '../Components/HabitItem'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import app from '../Firebase/firebase.config'
 import { useEffect, useState } from 'react'
+import LoadingSpinner from '../Components/LoadingSpinner'
 
 const auth = getAuth(app)
 
@@ -10,10 +11,12 @@ function MyHabits() {
   const data = useLoaderData()
   const [userEmail, setUserEmail] = useState(null)
   const [filteredHabits, setFilteredHabits] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUserEmail(currentUser?.email || null)  
+      setUserEmail(currentUser?.email || null)
+      setLoading(false)
     })
     return () => unsubscribe()
   }, [])
@@ -25,6 +28,10 @@ function MyHabits() {
       setFilteredHabits([])
     }
   }, [userEmail, data])
+
+  if (loading) {
+    return <LoadingSpinner></LoadingSpinner>
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 py-12">
@@ -41,7 +48,9 @@ function MyHabits() {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">No habits found for you.</p>
+            <p className="text-center text-gray-500">
+              No habits found for you.
+            </p>
           )
         ) : (
           <p className="text-center text-gray-500">
