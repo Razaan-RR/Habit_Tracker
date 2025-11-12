@@ -8,9 +8,14 @@ import {
 function WhyBuildHabits() {
   return (
     <section className="bg-indigo-50 py-16 px-5">
-      <h2 className="text-4xl font-bold text-center text-indigo-600 mb-12">
+      <h2 className="text-4xl font-bold text-center text-indigo-600 mb-8">
         Why Build Habits?
       </h2>
+      <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+        Building small, consistent habits helps you achieve long-term growth and
+        balance. Each daily step brings you closer to a healthier, more focused,
+        and fulfilled life.
+      </p>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="bg-white rounded-3xl shadow-xl p-6 flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-2xl transform transition-all duration-300">
           <div className="bg-indigo-100 p-3 rounded-full mb-4">
