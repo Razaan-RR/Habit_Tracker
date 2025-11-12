@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router'
 import Navbar from '../Components/Navbar'
+import Footer from '../Components/Footer'
 
 function AuthLayout() {
   return (
@@ -11,6 +12,7 @@ function AuthLayout() {
       <main className="flex-1 max-w-6xl w-11/12 mx-auto py-8">
         <Outlet />
       </main>
+      <Footer />
     </div>
   )
 }
