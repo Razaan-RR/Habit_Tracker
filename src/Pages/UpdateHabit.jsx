@@ -1,52 +1,52 @@
-import { useContext, useState } from "react";
-import { useLoaderData } from "react-router";
-import { AuthContext } from "../provider/AuthProvider";
-import toast from "react-hot-toast";
+import { useContext, useState } from 'react'
+import { useLoaderData } from 'react-router'
+import { AuthContext } from '../provider/AuthProvider'
+import toast from 'react-hot-toast'
 
 function UpdateHabit() {
-  const { user } = useContext(AuthContext);
-  const habitData = useLoaderData(); // existing habit data
+  const { user } = useContext(AuthContext)
+  const habitData = useLoaderData() // existing habit data
 
   const [habit, setHabit] = useState({
-    title: habitData.title || "",
-    description: habitData.description || "",
-    category: habitData.category || "Morning",
-    reminderTime: habitData.reminderTime || "",
-    imageUrl: habitData.imageUrl || "",
-  });
+    title: habitData.title || '',
+    description: habitData.description || '',
+    category: habitData.category || 'Morning',
+    reminderTime: habitData.reminderTime || '',
+    imageUrl: habitData.imageUrl || '',
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setHabit({ ...habit, [name]: value });
-  };
+    const { name, value } = e.target
+    setHabit({ ...habit, [name]: value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const updatedHabit = {
       ...habit,
       updatedAt: new Date(),
-    };
+    }
 
-    fetch(`http://localhost:3000/habits/${habitData._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
+    fetch(`https://trackify-server-azure.vercel.app/habits/${habitData._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedHabit),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data)
         if (data.success) {
-          toast.success("Habit updated successfully!");
+          toast.success('Habit updated successfully!')
         } else {
-          toast.error("Update failed. Please try again.");
+          toast.error('Update failed. Please try again.')
         }
       })
       .catch((err) => {
-        console.error(err);
-        toast.error("Something went wrong.");
-      });
-  };
+        console.error(err)
+        toast.error('Something went wrong.')
+      })
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 py-12">
@@ -137,7 +137,7 @@ function UpdateHabit() {
             </label>
             <input
               type="text"
-              value={user?.displayName || habitData.ownerName || ""}
+              value={user?.displayName || habitData.ownerName || ''}
               readOnly
               className="w-full border border-gray-300 bg-gray-100 rounded-lg px-3 py-2"
             />
@@ -149,7 +149,7 @@ function UpdateHabit() {
             </label>
             <input
               type="email"
-              value={user?.email || habitData.ownerEmail || ""}
+              value={user?.email || habitData.ownerEmail || ''}
               readOnly
               className="w-full border border-gray-300 bg-gray-100 rounded-lg px-3 py-2"
             />
@@ -164,7 +164,7 @@ function UpdateHabit() {
         </form>
       </section>
     </div>
-  );
+  )
 }
 
-export default UpdateHabit;
+export default UpdateHabit

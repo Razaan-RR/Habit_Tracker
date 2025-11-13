@@ -1,24 +1,24 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../provider/AuthProvider";
-import toast from "react-hot-toast";
+import { useContext, useState } from 'react'
+import { AuthContext } from '../provider/AuthProvider'
+import toast from 'react-hot-toast'
 
 function AddHabit() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext)
   const [habit, setHabit] = useState({
-    title: "",
-    description: "",
-    category: "Morning",
-    reminderTime: "",
-    imageUrl: "",
-  });
+    title: '',
+    description: '',
+    category: 'Morning',
+    reminderTime: '',
+    imageUrl: '',
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setHabit({ ...habit, [name]: value });
-  };
+    const { name, value } = e.target
+    setHabit({ ...habit, [name]: value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const newHabit = {
       ...habit,
@@ -28,30 +28,30 @@ function AddHabit() {
       completionHistory: [],
       createdAt: new Date(),
       updatedAt: new Date(),
-    };
+    }
 
-    fetch("http://localhost:3000/habits", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    fetch('https://trackify-server-azure.vercel.app/habits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newHabit),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        toast.success("Habit added successfully!");
+        console.log(data)
+        toast.success('Habit added successfully!')
         setHabit({
-          title: "",
-          description: "",
-          category: "Morning",
-          reminderTime: "",
-          imageUrl: "",
-        });
+          title: '',
+          description: '',
+          category: 'Morning',
+          reminderTime: '',
+          imageUrl: '',
+        })
       })
       .catch((err) => {
-        console.error(err);
-        toast.error("Something went wrong");
-      });
-  };
+        console.error(err)
+        toast.error('Something went wrong')
+      })
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 py-12">
@@ -142,7 +142,7 @@ function AddHabit() {
             </label>
             <input
               type="text"
-              value={user?.displayName || ""}
+              value={user?.displayName || ''}
               readOnly
               className="w-full border border-gray-300 bg-gray-100 rounded-lg px-3 py-2"
             />
@@ -154,7 +154,7 @@ function AddHabit() {
             </label>
             <input
               type="email"
-              value={user?.email || ""}
+              value={user?.email || ''}
               readOnly
               className="w-full border border-gray-300 bg-gray-100 rounded-lg px-3 py-2"
             />
@@ -169,7 +169,7 @@ function AddHabit() {
         </form>
       </section>
     </div>
-  );
+  )
 }
 
-export default AddHabit;
+export default AddHabit

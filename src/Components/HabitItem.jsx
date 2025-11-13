@@ -8,7 +8,6 @@ import app from '../Firebase/firebase.config'
 
 const auth = getAuth(app)
 
-
 function HabitItem({ habit }) {
   const {
     title,
@@ -52,7 +51,9 @@ function HabitItem({ habit }) {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/habits/${_id}`, { method: 'DELETE' })
+        fetch(`https://trackify-server-azure.vercel.app/habits/${_id}`, {
+          method: 'DELETE',
+        })
           .then(() => {
             navigate('/my-habits')
             Swal.fire('Deleted!', 'Habit deleted.', 'success')
@@ -79,7 +80,7 @@ function HabitItem({ habit }) {
     setHabitData({ ...habitData, completionHistory: updatedHistory })
 
     try {
-      await fetch(`http://localhost:3000/habits/${_id}`, {
+      await fetch(`https://trackify-server-azure.vercel.app/habits/${_id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completionHistory: updatedHistory }),

@@ -21,12 +21,13 @@ let router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
-        loader: ()=>fetch('http://localhost:3000/latest-habits')
+        loader: () =>
+          fetch('https://trackify-server-azure.vercel.app/latest-habits'),
       },
       {
         path: '/public-habits',
         element: <PublicHabits></PublicHabits>,
-        loader: () => fetch('http://localhost:3000/habits'),
+        loader: () => fetch('https://trackify-server-azure.vercel.app/habits'),
       },
       {
         path: '/my-habits',
@@ -35,7 +36,7 @@ let router = createBrowserRouter([
             <MyHabits></MyHabits>
           </ProtectedRoute>
         ),
-        loader: () => fetch('http://localhost:3000/habits'),
+        loader: () => fetch('https://trackify-server-azure.vercel.app/habits'),
       },
       {
         path: '/add-habit',
@@ -53,7 +54,7 @@ let router = createBrowserRouter([
           </ProtectedRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/habits/${params.id}`),
+          fetch(`https://trackify-server-azure.vercel.app/habits/${params.id}`),
       },
       {
         path: '/update-habit/:id',
@@ -63,7 +64,7 @@ let router = createBrowserRouter([
           </ProtectedRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/habits/${params.id}`),
+          fetch(`https://trackify-server-azure.vercel.app/habits/${params.id}`),
       },
     ],
   },

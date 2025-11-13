@@ -76,15 +76,18 @@ function HabitDetails() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/habits/complete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          habit: habitData,
-          userEmail: user.email,
-          userName: user.displayName,
-        }),
-      })
+      const response = await fetch(
+        'https://trackify-server-azure.vercel.app/habits/complete',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            habit: habitData,
+            userEmail: user.email,
+            userName: user.displayName,
+          }),
+        }
+      )
 
       const result = await response.json()
 

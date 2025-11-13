@@ -10,7 +10,7 @@ function PublicHabits() {
   const [categories, setCategories] = useState(['All'])
 
   useEffect(() => {
-    fetch('http://localhost:3000/categories')
+    fetch('https://trackify-server-azure.vercel.app/categories')
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error('Error loading categories:', err))

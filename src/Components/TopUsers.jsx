@@ -5,7 +5,7 @@ function TopUsers() {
   const [topUsers, setTopUsers] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3000/habits')
+    fetch('https://trackify-server-azure.vercel.app/habits')
       .then((res) => res.json())
       .then((data) => {
         // Helper: calculate streak for each habit
