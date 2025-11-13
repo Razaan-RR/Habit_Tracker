@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 function HabitDetails() {
   const habit = useLoaderData()
   const navigate = useNavigate()
+  const [habitData, setHabitData] = useState(habit)
 
   if (!habit) return <div className="text-center p-10">No Habit Selected</div>
 
@@ -63,30 +65,79 @@ function HabitDetails() {
 
   const currentStreak = calculateStreak(completionHistory)
 
-  const handleDelete = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`http://localhost:3000/habits/${_id}`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-        })
-          .then((res) => res.json())
-          .then(() => {
-            navigate('/my-habits')
-            Swal.fire('Deleted!', 'Habit has been deleted.', 'success')
-          })
-          .catch((err) => console.error(err))
-      }
-    })
+  const handleMarkComplete = async () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Deep copy of completionHistory
+  let updatedHistory = (habitData.completionHistory || []).map((entry) => ({
+    completed: entry.completed,
+    createdAt: entry.createdAt,
+  }));
+
+  const todayIndex = updatedHistory.findIndex((entry) => {
+    const entryDate = new Date(entry.createdAt);
+    entryDate.setHours(0, 0, 0, 0);
+    return entryDate.getTime() === today.getTime();
+  });
+
+  if (todayIndex === -1) {
+    updatedHistory.push({
+      createdAt: new Date().toISOString(),
+      completed: true,
+    });
+  } else if (!updatedHistory[todayIndex].completed) {
+    updatedHistory[todayIndex].completed = true;
+  } else {
+    Swal.fire('Already done!', 'You have completed this habit today.', 'info');
+    return;
   }
+
+  try {
+    // If this is a public habit (not yours), create a copy for the user
+    if (habitData.ownerEmail !== auth.currentUser.email) {
+      const newHabit = {
+        ...habitData,
+        ownerEmail: auth.currentUser.email, // assign to current user
+        completionHistory: updatedHistory,
+        _id: undefined, // let backend generate new ID
+      };
+
+      const response = await fetch('http://localhost:3000/habits', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newHabit),
+      });
+
+      if (!response.ok) throw new Error('Failed to create habit for user');
+
+      const createdHabit = await response.json();
+      setHabitData(createdHabit); // update local state
+    } else {
+      // It's your habit, just update
+      const { _id, ...fieldsToUpdate } = habitData;
+      fieldsToUpdate.completionHistory = updatedHistory;
+
+      const response = await fetch(`http://localhost:3000/habits/${_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fieldsToUpdate),
+      });
+
+      if (!response.ok) throw new Error('Failed to update habit');
+
+      const updatedHabit = await response.json();
+      setHabitData(updatedHabit);
+    }
+
+    Swal.fire('Good job!', 'Habit marked as complete!', 'success');
+  } catch (error) {
+    console.error(error);
+    Swal.fire('Error', 'Something went wrong!', 'error');
+  }
+};
+
+
 
   return (
     <div className="min-h-screen py-12 bg-linear-to-br from-indigo-50 to-purple-50">
@@ -103,7 +154,7 @@ function HabitDetails() {
           <div className="bg-white p-6 rounded-2xl shadow-lg border border-indigo-100 space-y-4">
             <h1 className="text-3xl font-bold text-indigo-700">{title}</h1>
             <p className="text-gray-700">{description}</p>
-            
+
             <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-semibold">
                 {category}
@@ -112,30 +163,41 @@ function HabitDetails() {
                 Owner: {ownerName} ({ownerEmail})
               </span>
               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold">
-                Created: {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
+                Created:{' '}
+                {createdAt
+                  ? new Date(createdAt).toLocaleDateString()
+                  : 'Unknown'}
               </span>
             </div>
 
             <div>
-              <h3 className="text-gray-700 font-semibold mb-1">Progress (Last 30 days)</h3>
+              <h3 className="text-gray-700 font-semibold mb-1">
+                Progress (Last 30 days)
+              </h3>
               <div className="w-full bg-gray-200 h-4 rounded-full">
                 <div
                   className="h-4 rounded-full bg-linear-to-r from-emerald-400 to-emerald-600 transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-1">{progress}% completed</p>
+              <p className="text-sm text-gray-500 mt-1">
+                {progress}% completed
+              </p>
             </div>
 
             <div>
               <p className="text-gray-700 font-semibold">
-                Current Streak: <span className="text-orange-500">{currentStreak} 🔥</span>
+                Current Streak:{' '}
+                <span className="text-orange-500">{currentStreak} 🔥</span>
               </p>
             </div>
           </div>
 
           <div className="flex gap-4">
-            <button className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all">
+            <button
+              onClick={handleMarkComplete}
+              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all"
+            >
               Mark Complete
             </button>
           </div>

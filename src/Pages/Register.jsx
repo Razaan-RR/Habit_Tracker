@@ -3,7 +3,13 @@ import { FcGoogle } from 'react-icons/fc'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../provider/AuthProvider'
 import toast, { Toaster } from 'react-hot-toast'
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+  reload,
+} from 'firebase/auth'
 import app from '../Firebase/firebase.config'
 
 const auth = getAuth(app)
@@ -55,10 +61,28 @@ function Register() {
 
     createUser(email, password)
       .then((result) => {
-        const user = result
-        setUser({ ...user, displayName: name, photoURL: photo })
-        toast.success('Registration successful!')
-        navigate(from, { replace: true })
+        const user = result.user
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: photo,
+        })
+          .then(() => {
+            auth.currentUser.reload().then(() => {
+              const updatedUser = auth.currentUser
+              setUser({
+                ...updatedUser,
+                displayName: updatedUser.displayName,
+                photoURL: updatedUser.photoURL,
+                email: updatedUser.email,
+              })
+              toast.success('Registration successful!')
+              navigate(from, { replace: true })
+            })
+          })
+          .catch((err) => {
+            console.error('Profile update error:', err)
+            toast.error('Profile update failed.')
+          })
       })
       .catch((error) => {
         console.error('Registration error:', error.message)
