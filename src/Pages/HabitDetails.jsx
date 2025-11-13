@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { getAuth } from 'firebase/auth'
+import app from '../Firebase/firebase.config'
+const auth = getAuth(app)
 
 function HabitDetails() {
   const habit = useLoaderData()
@@ -66,78 +69,39 @@ function HabitDetails() {
   const currentStreak = calculateStreak(completionHistory)
 
   const handleMarkComplete = async () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  // Deep copy of completionHistory
-  let updatedHistory = (habitData.completionHistory || []).map((entry) => ({
-    completed: entry.completed,
-    createdAt: entry.createdAt,
-  }));
-
-  const todayIndex = updatedHistory.findIndex((entry) => {
-    const entryDate = new Date(entry.createdAt);
-    entryDate.setHours(0, 0, 0, 0);
-    return entryDate.getTime() === today.getTime();
-  });
-
-  if (todayIndex === -1) {
-    updatedHistory.push({
-      createdAt: new Date().toISOString(),
-      completed: true,
-    });
-  } else if (!updatedHistory[todayIndex].completed) {
-    updatedHistory[todayIndex].completed = true;
-  } else {
-    Swal.fire('Already done!', 'You have completed this habit today.', 'info');
-    return;
-  }
-
-  try {
-    // If this is a public habit (not yours), create a copy for the user
-    if (habitData.ownerEmail !== auth.currentUser.email) {
-      const newHabit = {
-        ...habitData,
-        ownerEmail: auth.currentUser.email, // assign to current user
-        completionHistory: updatedHistory,
-        _id: undefined, // let backend generate new ID
-      };
-
-      const response = await fetch('http://localhost:3000/habits', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newHabit),
-      });
-
-      if (!response.ok) throw new Error('Failed to create habit for user');
-
-      const createdHabit = await response.json();
-      setHabitData(createdHabit); // update local state
-    } else {
-      // It's your habit, just update
-      const { _id, ...fieldsToUpdate } = habitData;
-      fieldsToUpdate.completionHistory = updatedHistory;
-
-      const response = await fetch(`http://localhost:3000/habits/${_id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fieldsToUpdate),
-      });
-
-      if (!response.ok) throw new Error('Failed to update habit');
-
-      const updatedHabit = await response.json();
-      setHabitData(updatedHabit);
+    const user = auth.currentUser
+    if (!user) {
+      Swal.fire('Please login first!', '', 'warning')
+      return
     }
 
-    Swal.fire('Good job!', 'Habit marked as complete!', 'success');
-  } catch (error) {
-    console.error(error);
-    Swal.fire('Error', 'Something went wrong!', 'error');
+    try {
+      const response = await fetch('http://localhost:3000/habits/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ habit: habitData, userEmail: user.email }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        Swal.fire('Good job!', 'Habit marked as complete!', 'success')
+        // Locally update completionHistory for smooth UI feedback
+        setHabitData({
+          ...habitData,
+          completionHistory: [
+            ...(habitData.completionHistory || []),
+            { createdAt: new Date().toISOString() },
+          ],
+        })
+      } else {
+        Swal.fire('Error', result.message || 'Something went wrong!', 'error')
+      }
+    } catch (error) {
+      console.error(error)
+      Swal.fire('Error', 'Something went wrong!', 'error')
+    }
   }
-};
-
-
 
   return (
     <div className="min-h-screen py-12 bg-linear-to-br from-indigo-50 to-purple-50">

@@ -1,23 +1,27 @@
 import { useLoaderData } from 'react-router'
 import HabitCard from '../Components/HabitCard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function PublicHabits() {
   const data = useLoaderData() || []
 
-  const [searchTerm, setSearchTerm] = useState('')
+  const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [categories, setCategories] = useState(['All'])
 
-  const categories = ['All', 'Morning', 'Work', 'Fitness', 'Evening', 'Study']
+  useEffect(() => {
+    fetch('http://localhost:3000/categories')
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((err) => console.error('Error loading categories:', err))
+  }, [])
 
   const filteredHabits = data
     .filter((habit) => habit.public)
     .filter((habit) =>
       selectedCategory === 'All' ? true : habit.category === selectedCategory
     )
-    .filter((habit) =>
-      habit.title.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    .filter((habit) => habit.title.toLowerCase().includes(search.toLowerCase()))
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 py-12">
@@ -30,8 +34,8 @@ function PublicHabits() {
           <input
             type="text"
             placeholder="Search habits..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full sm:w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300"
           />
 
