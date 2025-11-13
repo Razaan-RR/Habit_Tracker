@@ -21,5 +21,5 @@ Update or delete your habits as needed
 User friendly UI
 
 # Live Link
-
+https://trackify-habit-tracker.netlify.app/
 
