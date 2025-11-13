@@ -21,6 +21,7 @@ let router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
+        loader: ()=>fetch('http://localhost:3000/latest-habits')
       },
       {
         path: '/public-habits',
