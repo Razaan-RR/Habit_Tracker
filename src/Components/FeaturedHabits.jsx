@@ -1,6 +1,5 @@
 import { useLoaderData } from 'react-router'
 import HabitCard from './HabitCard'
-import LoadingSpinner from './LoadingSpinner'
 
 function FeaturedHabits() {
   const data = useLoaderData()

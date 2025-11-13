@@ -1,9 +1,18 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import Swal from 'sweetalert2'
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
 
 function HabitItem({ habit }) {
-  const { title, category, completionHistory = [], createdAt, _id } = habit
+  const {
+    title,
+    imageUrl,
+    category,
+    completionHistory = [],
+    createdAt,
+    _id,
+  } = habit
   const navigate = useNavigate()
   const [habitData, setHabitData] = useState(habit)
 
@@ -100,12 +109,32 @@ function HabitItem({ habit }) {
         </thead>
         <tbody>
           <tr className="hover:bg-indigo-50 transition-all duration-200">
-            <td className="font-medium text-gray-800 wrap-break-word pl-4">{title}</td>
-            <td className="text-gray-600 wrap-break-word">{category}</td>
-            <td className="text-orange-500 font-semibold text-center">
+            <td
+              className="font-medium text-gray-800 wrap-break-word pl-4"
+              data-tooltip-id="main-tooltip"
+              data-tooltip-html={`<img src="${imageUrl}" style="width:150px;height:150px;object-fit:cover;" />`}
+            >
+              {title}
+            </td>
+            <td
+              className="text-gray-600 wrap-break-word"
+              data-tooltip-id="main-tooltip"
+              data-tooltip-html={`<img src="${imageUrl}" style="width:150px;height:150px;object-fit:cover;" />`}
+            >
+              {category}
+            </td>
+            <td
+              className="text-orange-500 font-semibold text-center"
+              data-tooltip-id="main-tooltip"
+              data-tooltip-html={`<img src="${imageUrl}" style="width:150px;height:150px;object-fit:cover;" />`}
+            >
               {currentStreak} 🔥
             </td>
-            <td className="text-gray-500 text-center">
+            <td
+              className="text-gray-500 text-center"
+              data-tooltip-id="main-tooltip"
+              data-tooltip-html={`<img src="${imageUrl}" style="width:150px;height:150px;object-fit:cover;" />`}
+            >
               {createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
             </td>
             <td className="text-center py-3 flex justify-center gap-2 pr-4">
@@ -136,6 +165,16 @@ function HabitItem({ habit }) {
           </tr>
         </tbody>
       </table>
+      <Tooltip
+        id="main-tooltip"
+        place="right"
+        style={{
+          position: 'fixed',
+          top: '20%',
+          right: '5%',
+          pointerEvents: 'none',
+        }}
+      />
     </div>
   )
 }

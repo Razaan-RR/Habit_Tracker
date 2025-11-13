@@ -5,20 +5,52 @@ import TopUsers from '../Components/TopUsers'
 import WhyBuildHabits from '../Components/WhyBuildHabits'
 import { motion } from 'framer-motion'
 
-console.log(motion)
 function Home() {
   return (
     <div>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1 }}
       >
-        <Banner></Banner>
-        <FeaturedHabits></FeaturedHabits>
-        <WhyBuildHabits></WhyBuildHabits>
-        <TopUsers></TopUsers>
-        <FeedbackSection></FeedbackSection>
+        <Banner />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8 }}
+      >
+        <FeaturedHabits />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: -100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        <WhyBuildHabits />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <TopUsers />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+      >
+        <FeedbackSection />
       </motion.div>
     </div>
   )
