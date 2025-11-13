@@ -146,7 +146,7 @@ function HabitItem({ habit }) {
             <td className="text-center py-3 flex justify-center gap-2 pr-4">
               <Link
                 to={`/update-habit/${_id}`}
-                className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white w-full sm:w-auto"
+                className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white w-auto sm:w-auto md:w-24 lg:w-28" // ✅ added
               >
                 Update
               </Link>

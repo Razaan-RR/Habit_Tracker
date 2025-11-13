@@ -34,8 +34,8 @@ function MyHabits() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 py-12">
-      <section className="w-11/12 max-w-6xl mx-auto">
+    <div className="min-h-screen bg-linear-to-br from-indigo-50 to-indigo-25 py-12 overflow-x-hidden">
+      <section className="w-11/12 max-w-6xl mx-auto px-2 sm:px-4 md:px-6">
         <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-700 tracking-wide">
           My Habits
         </h2>
@@ -43,7 +43,7 @@ function MyHabits() {
         {userEmail ? (
           filteredHabits.length > 0 ? (
             filteredHabits.map((habit) => (
-              <div key={habit._id} className="mb-6">
+              <div key={habit._id} className="mb-6 sm:mb-8 md:mb-10">
                 <HabitItem habit={habit} />
               </div>
             ))
