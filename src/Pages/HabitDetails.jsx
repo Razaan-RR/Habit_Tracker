@@ -106,6 +106,19 @@ function HabitDetails() {
     }
   }
 
+  const user = auth.currentUser
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const alreadyCompletedToday = user
+    ? habitData.ownerEmail === user.email &&
+      habitData.completionHistory?.some((entry) => {
+        const entryDate = new Date(entry.createdAt)
+        entryDate.setHours(0, 0, 0, 0)
+        return entryDate.getTime() === today.getTime()
+      })
+    : false
+
   return (
     <div className="min-h-screen py-12 bg-linear-to-br from-indigo-50 to-purple-50">
       <div className="max-w-4xl mx-auto flex flex-col lg:flex-row gap-10">
@@ -163,9 +176,14 @@ function HabitDetails() {
           <div className="flex gap-4">
             <button
               onClick={handleMarkComplete}
-              className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-2xl font-semibold transition-all"
+              disabled={alreadyCompletedToday}
+              className={`flex-1 ${
+                alreadyCompletedToday
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-emerald-500 hover:bg-emerald-600'
+              } text-white px-5 py-3 rounded-2xl font-semibold transition-all`}
             >
-              Mark Complete
+              {alreadyCompletedToday ? 'Completed' : 'Mark Complete'}
             </button>
           </div>
         </div>

@@ -3,6 +3,11 @@ import { Link, useNavigate } from 'react-router'
 import Swal from 'sweetalert2'
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
+import { getAuth } from 'firebase/auth'
+import app from '../Firebase/firebase.config'
+
+const auth = getAuth(app)
+
 
 function HabitItem({ habit }) {
   const {
