@@ -7,13 +7,13 @@ import { motion } from 'framer-motion'
 
 function Home() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden bg-indigo-50">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 1 }}
-        className="max-w-6xl mx-auto px-4 lg:px-8"
+        className="w-full mx-auto"
       >
         <Banner />
       </motion.div>
@@ -23,7 +23,7 @@ function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8 }}
-        className="px-4 sm:px-6 lg:px-8"
+        className="sm:px-6"
       >
         <FeaturedHabits />
       </motion.div>
@@ -33,7 +33,7 @@ function Home() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="px-4 sm:px-6 lg:px-8"
+        className="sm:px-6"
       >
         <WhyBuildHabits />
       </motion.div>
@@ -43,7 +43,7 @@ function Home() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="px-4 sm:px-6 lg:px-8"
+        className="sm:px-6"
       >
         <TopUsers />
       </motion.div>
@@ -53,7 +53,7 @@ function Home() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="px-4 sm:px-6 lg:px-8"
+        className="sm:px-6"
       >
         <FeedbackSection />
       </motion.div>

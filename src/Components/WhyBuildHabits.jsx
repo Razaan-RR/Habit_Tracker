@@ -7,7 +7,7 @@ import {
 
 function WhyBuildHabits() {
   return (
-    <section className="bg-indigo-50 py-16 px-5">
+    <section className="bg-indigo-50 py-16">
       <h2 className="text-4xl font-bold text-center text-indigo-600 mb-8">
         Why Build Habits?
       </h2>
