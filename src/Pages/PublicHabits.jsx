@@ -17,7 +17,6 @@ function PublicHabits() {
   }, [])
 
   const filteredHabits = data
-    .filter((habit) => habit.public)
     .filter((habit) =>
       selectedCategory === 'All' ? true : habit.category === selectedCategory
     )

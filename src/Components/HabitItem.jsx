@@ -87,10 +87,10 @@ function HabitItem({ habit }) {
   })()
 
   return (
-    <div className="rounded-2xl shadow-xl bg-white mb-6">
-      <table className="table-auto w-full border-collapse">
+    <div className="rounded-2xl shadow-xl bg-white mb-6 overflow-x-auto">
+      <table className="table-auto w-full border-collapse min-w-[600px] md:min-w-full">
         <thead>
-          <tr className="bg-indigo-100 text-indigo-800 text-base font-semibold">
+          <tr className="bg-indigo-100 text-indigo-800 text-sm md:text-base font-semibold">
             <th className="w-1/6 py-2 pl-4 text-left wrap-break-word">Title</th>
             <th className="w-1/6 text-left wrap-break-word">Category</th>
             <th className="w-1/6 text-center">Current Streak</th>
@@ -111,7 +111,7 @@ function HabitItem({ habit }) {
             <td className="text-center py-3 flex justify-center gap-2 pr-4">
               <Link
                 to={`/update-habit/${_id}`}
-                className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white"
+                className="btn btn-sm bg-indigo-500 hover:bg-indigo-600 border-none text-white w-full sm:w-auto"
               >
                 Update
               </Link>

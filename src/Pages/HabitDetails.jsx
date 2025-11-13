@@ -79,14 +79,17 @@ function HabitDetails() {
       const response = await fetch('http://localhost:3000/habits/complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ habit: habitData, userEmail: user.email }),
+        body: JSON.stringify({
+          habit: habitData,
+          userEmail: user.email,
+          userName: user.displayName,
+        }),
       })
 
       const result = await response.json()
 
       if (response.ok) {
         Swal.fire('Good job!', 'Habit marked as complete!', 'success')
-        // Locally update completionHistory for smooth UI feedback
         setHabitData({
           ...habitData,
           completionHistory: [
