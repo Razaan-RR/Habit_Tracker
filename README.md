@@ -26,6 +26,10 @@ A web app for users to create, track, and manage daily habits to build streaks a
 
 [https://trackify-habit-tracker.netlify.app/](https://trackify-habit-tracker.netlify.app/)
 
+## Vercel Link
+
+https://trackify-server-azure.vercel.app/
+
 ---
 
 ## Dependencies
