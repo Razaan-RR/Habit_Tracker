@@ -1,34 +1,51 @@
-# Project Name
-
-Trackify
-
-# Description
+# Trackify
 
 A web app for users to create, track, and manage daily habits to build streaks and boost productivity.
 
-# Features
+## Features
 
-Create your own personalized and secured account
+* Create your own personalized and secured account
+* Track your habits daily and mark completed tasks to keep yourself motivated
+* Discover others with similar habits and daily achievements to boost your confidence and stay inspired
+* Add new habits whenever you get an inspiration or idea
+* Update or delete your habits as needed
+* User-friendly UI
 
-Track your habits daily and mark completed tasks to keep yourself motivated
+## Tech Stack
 
-Discover others with similar habits and daily acheivements to boost your confidence and stay inspired
+* **MongoDB**
+* **Express**
+* **Node.js**
+* **React**
+* **Tailwind CSS**
+* **DaisyUI**
 
-Add new habits whenever you get an inspiration or idea
+## Live Link
 
-Update or delete your habits as needed
+[https://trackify-habit-tracker.netlify.app/](https://trackify-habit-tracker.netlify.app/)
 
-User friendly UI
+---
 
-# Tech Stack
-MongoDB
-Express
-NodeJs
-React
-Tailwind
-CSS
-DaisyUI
+## Dependencies
 
-# Live Link
-https://trackify-habit-tracker.netlify.app/
+### **Main Dependencies**
 
+* **react** – Main UI library
+* **react-dom** – DOM renderer for React
+* **react-router-dom** – SPA navigation & routing
+* **firebase** – Authentication and backend services
+* **axios** – API requests
+* **react-tooltip** – Tooltips on hover
+* **framer-motion** – Animation library
+* **sweetalert2** – Popup alerts
+* **react-icons** – Icons library
+* **prop-types** – Prop type checking
+* **daisyui** – UI component library
+* **tailwindcss** – Styling framework
+
+### **Dev Dependencies**
+
+* **vite** – Development server & bundler
+* **eslint** – Linting tool
+* **@eslint/js** – ESLint base rules
+* **eslint-plugin-react** – React-specific linting rules
