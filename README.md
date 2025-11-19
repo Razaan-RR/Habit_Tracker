@@ -20,6 +20,15 @@ Update or delete your habits as needed
 
 User friendly UI
 
+# Tech Stack
+MongoDB
+Express
+NodeJs
+React
+Tailwind
+CSS
+DaisyUI
+
 # Live Link
 https://trackify-habit-tracker.netlify.app/
 
