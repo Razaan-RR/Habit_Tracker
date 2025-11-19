@@ -2,6 +2,8 @@
 
 A web app for users to create, track, and manage daily habits to build streaks and boost productivity.
 
+![App Screenshot](Artify.png)
+
 ## Features
 
 * Create your own personalized and secured account
