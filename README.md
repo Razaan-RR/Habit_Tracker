@@ -49,3 +49,20 @@ A web app for users to create, track, and manage daily habits to build streaks a
 * **eslint** – Linting tool
 * **@eslint/js** – ESLint base rules
 * **eslint-plugin-react** – React-specific linting rules
+
+How to Run on a Local Machine
+1. Clone the Repository
+git clone https://github.com/Razaan-RR/Habit_Tracker.git
+2. Navigate to the Project Folder
+cd Habit_Tracker
+3. Install Dependencies
+npm install
+4. Start the Development Server
+npm run dev
+5. Open in Browser
+
+Go to the URL shown in the terminal, usually:
+
+http://localhost:5173
+
+Your project should now run locally!
