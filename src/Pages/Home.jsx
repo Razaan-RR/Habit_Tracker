@@ -1,6 +1,7 @@
 import Banner from '../Components/Banner'
 import FeaturedHabits from '../Components/FeaturedHabits'
 import FeedbackSection from '../Components/FeedbackSection'
+import HowTrackifyWorks from '../Components/HowTrackifyWorks'
 import TopUsers from '../Components/TopUsers'
 import WhyBuildHabits from '../Components/WhyBuildHabits'
 import { motion } from 'framer-motion'
@@ -57,6 +58,7 @@ function Home() {
       >
         <FeedbackSection />
       </motion.div>
+      <HowTrackifyWorks></HowTrackifyWorks>
     </div>
   )
 }
