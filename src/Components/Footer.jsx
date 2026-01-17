@@ -21,7 +21,7 @@ function Footer() {
         </div>
 
         <div className="flex flex-col items-start">
-          <p className="text-sm mb-2">Follow us on social media for updates and tips:</p>
+          <p className="text-sm mb-2">Follow us on social media for more updates:</p>
           <div className="flex gap-3 mt-1">
             <a href="#" className="bg-white p-2 rounded-full shadow hover:bg-indigo-100 transition">
               <FaFacebookF size={16} className="text-indigo-600" />
