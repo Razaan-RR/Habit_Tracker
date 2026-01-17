@@ -1,4 +1,6 @@
+import AchievementsAndRewards from '../Components/AchievementsAndRewards'
 import Banner from '../Components/Banner'
+import FAQSection from '../Components/FAQSection'
 import FeaturedHabits from '../Components/FeaturedHabits'
 import FeedbackSection from '../Components/FeedbackSection'
 import HabitBuildingPrinciples from '../Components/HabitBuildingPrinciples'
@@ -63,6 +65,8 @@ function Home() {
       <HowTrackifyWorks></HowTrackifyWorks>
       <OurMission></OurMission>
       <HabitBuildingPrinciples></HabitBuildingPrinciples>
+      <AchievementsAndRewards></AchievementsAndRewards>
+      <FAQSection></FAQSection>
     </div>
   )
 }
