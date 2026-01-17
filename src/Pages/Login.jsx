@@ -10,6 +10,11 @@ import { FcGoogle } from 'react-icons/fc'
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
 
+const demoUser = {
+  email: 'user@demo.com',
+  password: '123456',
+}
+
 function Login() {
   const { signIn, setUser } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -32,26 +37,34 @@ function Login() {
   }
 
   const handleLogin = (e) => {
-  e.preventDefault()
-  const form = e.target
-  const email = form.email.value
-  const password = form.password.value
-  setError('')
+    e.preventDefault()
+    const form = e.target
+    const email = form.email.value
+    const password = form.password.value
+    setError('')
 
-  signIn(email, password)
-    .then(async (result) => {
-      await result.user.reload()
-      setUser(auth.currentUser)
-      toast.success('Login successful!')
-      navigate(from, { replace: true })
-    })
-    .catch((error) => {
-      console.error('Login error:', error.message)
-      setError('Invalid email or password.')
-      toast.error('Login failed. Please check your credentials.')
-    })
-}
+    signIn(email, password)
+      .then(async (result) => {
+        await result.user.reload()
+        setUser(auth.currentUser)
+        toast.success('Login successful!')
+        navigate(from, { replace: true })
+      })
+      .catch((error) => {
+        console.error('Login error:', error.message)
+        setError('Invalid email or password.')
+        toast.error('Login failed. Please check your credentials.')
+      })
+  }
 
+  const fillDemoCredentials = () => {
+    const emailInput = document.getElementById('email')
+    const passwordInput = document.getElementById('password')
+
+    emailInput.value = demoUser.email
+    passwordInput.value = demoUser.password
+    toast.success('Demo user credentials filled')
+  }
 
   return (
     <section className="flex justify-center items-center min-h-screen bg-linear-to-br from-indigo-100 via-white to-indigo-50 px-4">
@@ -63,12 +76,23 @@ function Login() {
           Login to continue building your habits
         </p>
 
+        <div className="mb-6">
+          <button
+            onClick={fillDemoCredentials}
+            type="button"
+            className="w-full bg-indigo-100 text-indigo-700 font-semibold py-2 rounded-md hover:bg-indigo-200 transition"
+          >
+            Use Demo Account
+          </button>
+        </div>
+
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Email
             </label>
             <input
+              id="email"
               name="email"
               type="email"
               placeholder="Enter your email"
@@ -83,6 +107,7 @@ function Login() {
             </label>
             <div className="relative">
               <input
+                id="password"
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter your password"
